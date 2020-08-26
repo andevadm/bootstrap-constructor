@@ -1,0 +1,205 @@
+// Re-configure Bootstrap variables - before import
+$theme-colors: (
+  "dark-green": #070,
+  "highlight": #EEF4CD
+);
+
+@import "../bootstrap/scss/bootstrap"; 
+
+// My variables
+$dark-green: #070;
+$text-shadow: 1px 1px 1px grey;
+
+// Main styles
+
+body {
+	font-size: 1.4rem;
+}
+
+header {
+	@extend .text-center, .bg-light, .py-4;
+
+	h1 {
+		@extend .text-success;
+		text-shadow: $text-shadow;
+	}
+
+	p {
+		@extend .d-none, .d-md-block;
+		//font-size: 1.4rem;
+	}
+
+}
+
+nav.navbar {
+	@extend .navbar-expand-lg, .navbar-dark, .mx-1, .rounded, .sticky-top, .bg-dark-green;
+
+	.navbar-brand {
+		@extend .text-warning;
+		font-size: 1.4rem;
+	}
+
+	.navbar-nav .nav-item {
+		@extend .px-4;
+	}
+
+	.navbar-nav .nav-link {		
+		//font-size: 1.4rem;
+		color: white;
+		opacity: 1;
+		&:hover {
+			color: white;
+			text-decoration: underline;
+		}
+		&.active {
+			text-decoration: underline;
+		}
+	}
+
+}
+
+main {
+	@extend .container-fluid, .p-4;
+}
+
+#slides {
+
+}
+
+.carousel-item * {
+	@extend .mx-auto, .my-1, .py-4, .px-2, .text-warning, .font-weight-bold, .shadow;
+	width: 80%;
+	font-size: 1.6rem;
+	text-shadow: $text-shadow;
+}
+
+.carousel-inner {
+	@extend .text-center;
+}
+
+#slide1 {
+	background-color: #EBEEB9;
+}
+
+#slide2 {
+	background-color: #DBF5D1;
+}
+
+#slide3 {
+	background-color: #F9E9D4;
+}
+
+#slide4 {
+	background-color: #DDF4F7;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+	@extend .rounded, .bg-warning;
+	// background-color: $dark-green;
+	height: 40px;
+}
+
+#indexGrid {
+	@extend .container-fluid, .m-1, .mt-3, .p-3, .justify-content-center;
+
+	.row {
+		@extend .justify-content-around;
+	}
+
+	.custom-column {
+		@extend .col-md-5, .my-2, .p-3, .text-center;
+	}
+
+	.custom-single-row {
+		@extend .col-md-10, .text-center, .text-warning, .font-weight-bold, .p-3, .m-3, .border-top, .border-bottom;
+		font-size: 1.6rem;
+		text-shadow: $text-shadow;
+	}
+
+	.card {
+		@extend .shadow-sm;
+	}
+
+	.card img {
+		@extend .card-img;
+	}
+
+	.card .btn {
+		@extend .btn-success, .p-3, .m-2;
+		font-size: 1.4rem;
+	}
+
+	.card .card-link {
+		@extend .text-success;
+	}
+
+}
+
+
+footer {
+	@extend .jumbotron, .text-center, .m-1, .py-4;
+}
+
+// Constructor elements
+
+.constructed {
+	@extend .m-1, .p-2, .rounded;
+	&:hover {
+		@extend .bg-light;
+		cursor: text;
+	}
+}
+
+h1.constructed {
+	@extend .mb-5;
+}
+
+h2.constructed {
+	@extend .my-4, .pl-5;
+	font-size: 1.8rem;
+}
+
+p.constructed {
+	
+}
+
+#editForm, #editFormTemp {
+	@extend .text-muted, .text-right, .pt-3, .mt-3;
+	font-size: 1rem;
+	& div {
+		cursor: auto;
+	}
+	& .row {
+		@extend  .mb-3;
+	}
+	& .custom-checkbox {
+		@extend .text-left, .my-2;
+	}
+	& .btn {
+		@extend .mt-3, .px-4;
+	}
+}
+
+.create-element {
+	@extend .text-center, .mt-3;
+	clear: both;
+
+	.btn {
+		font-size: 1.4rem;
+	}
+
+	label {
+		@extend .px-3;
+	}
+}
+
+#finalPage {
+	@extend .container-fluid, .p-3, .my-3; 
+	font-size: 1.8rem;
+}
+
+.modal-header {
+	@extend .bg-danger, .text-white, .text-center;
+	font-size: 1.6rem;
+}
