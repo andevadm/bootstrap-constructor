@@ -2,7 +2,7 @@
 <html lang="ru">
 
 <head>
-  <title>Bootstrap конструктор</title>
+  <title>Bootstrap Constructor</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style_constructor.css">
@@ -13,9 +13,10 @@
 
 <body>
 
-<main>
+<div id="page">
 
 	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	  <h2>Bootstrap Constructor</h2>
 	  <p>Для <strong>создания</strong> нового элемента - выберите его из списка ниже.</p>
 	  <p>Для <strong>редактирования</strong> элемента - щелкните на нем.</p>
 	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -26,30 +27,35 @@
 	<div id="publication">
 
 		<h1 class="constructed textBlock text-center">
-			Новый заголовок
+			Основной заголовок
 		</h1>
 
 	</div>
 	
 	<form class="create-element jumbotron">
-		<span>Выберите элемент, который хотите добавить:</span>
 		<span class="dropdown">
-			<button id="newElement" class="btn dropdown-toggle bg-secondary text-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Новый блок
+			<button id="newElement" class="btn dropdown-toggle bg-success text-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Новый элемент
 			</button>
 			<div class="dropdown-menu" aria-labelledby="newElement">
 				<a class="dropdown-item" id="paragraph" href="#">Абзац</a>
 			    <a class="dropdown-item" id="subheader" href="#">Подзаголовок</a>
+			    <!--Функция добавления блоков рисунков работает но временно отключена:
+					до реализации функции редактирования рисунка
 			    <a class="dropdown-item" id="image" href="#">Рисунок</a>
 			    <a class="dropdown-item" id="imageLeft" href="#">Текст с рисунком слева</a>
 			    <a class="dropdown-item" id="imageRight" href="#">Текст с рисунком справа</a>
+				-->
 			</div>
 		</span>
 	</form>
 
+<!--Кнопка для просмотра созданной страницы не используется:
+	понадобится при реализации сохранения на сервере
 	<button id="finalPage" class="btn bg-success text-white" type="button">
 		Просмотр готовой страницы
 	</button>
+-->
 
 	<div class="modal" id="modalRemove">
 	  <div class="modal-dialog">
@@ -71,7 +77,7 @@
 	  </div>
 	</div>
 
-</main>
+</div>
 
 </body>
 

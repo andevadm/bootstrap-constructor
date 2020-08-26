@@ -162,9 +162,13 @@ $(editForm).on('submit', function(){
 // Выбор на кнопке "Новый элемент"
 $('#paragraph').on('click', () => { event.preventDefault(); addText('p', 'абзац') });
 $('#subheader').on('click', () => { event.preventDefault(); addText('h2', 'подзаголовок') });
+/* 	Функция добавления блоков рисунков работает но временно отключена
+	Также работает editForm для textBlock в #imageLeft и #imageRight
+	Функция добавления не используются до реализации editForm для imgBlock
 $('#image').on('click', () => { event.preventDefault(); addImage('4', 'img/new_image.png', 'center') });
 $('#imageLeft').on('click', () => { event.preventDefault(); addImage('4', 'img/new_image.png', 'left') });
 $('#imageRight').on('click', () => { event.preventDefault(); addImage('4', 'img/new_image.png', 'right') });
+*/
 
 }); // $(document).ready
 
@@ -179,7 +183,7 @@ function addText(tag, name) {
 }
 
 function addImage(size, src, position) {
-// Добавляет к публикации новый блок с img и текстом 9слева или справа)
+// Добавляет к публикации новый блок с img и текстом слева или справа)
 // size - адаптивный размер рисунка от 1 до 12
 // src - расположение файла рисунка
 // position - положение рисунка: center (текста нет), left или right
