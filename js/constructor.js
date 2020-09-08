@@ -160,14 +160,14 @@ $(editForm).on('submit', function(){
 });
 
 // Выбор на кнопке "Новый элемент"
-$('#paragraph').on('click', () => { event.preventDefault(); addText('p', 'абзац') });
-$('#subheader').on('click', () => { event.preventDefault(); addText('h2', 'подзаголовок') });
+$('#paragraph').on('click', (event) => { event.preventDefault(); addText('p', 'абзац') });
+$('#subheader').on('click', (event) => { event.preventDefault(); addText('h2', 'подзаголовок') });
 /* 	Функция добавления блоков рисунков работает но временно отключена
 	Также работает editForm для textBlock в #imageLeft и #imageRight
 	Функция добавления не используются до реализации editForm для imgBlock
-$('#image').on('click', () => { event.preventDefault(); addImage('4', 'img/new_image.png', 'center') });
-$('#imageLeft').on('click', () => { event.preventDefault(); addImage('4', 'img/new_image.png', 'left') });
-$('#imageRight').on('click', () => { event.preventDefault(); addImage('4', 'img/new_image.png', 'right') });
+$('#image').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'center') });
+$('#imageLeft').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'left') });
+$('#imageRight').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'right') });
 */
 
 }); // $(document).ready
