@@ -1,29 +1,30 @@
-// Редактируемый элемент и его блок-контейнер
+// Edited component and its container block
+// Container differs from edited component for composite elements like text+image
 var editedElement = null; // = $('h1')[0];
 var containerBlock = null;
 
 $(document).ready(function(){
 
-// Блок редактирования элемента
+// Form to edit created components
 var editForm = document.createElement('form');
 editForm.id = 'editForm';
 $(editForm).addClass('row');
-// Элементы редактирования
+// Components of the edit form
 var editComponents = {};
 editComponents.default = 
 	`<p class="text-danger container-fluid">
-		Редактирование элемента недоступно
+		Edit is not available
 	</p>`;
 editComponents.textEdit = 
 	`<div class="form-group col-md">
-		<label for="textInput">Отредактируйте текст:</label>
-		<textarea class="form-control" id="textInput" rows="5">Новый заголовок</textarea>
+		<label for="textInput">Please edit the text:</label>
+		<textarea class="form-control" id="textInput" rows="5">New text</textarea>
 	</div>`;
 editComponents.textProperties = 
 	`<div class="form-group col-md">
 		<div class="row">
 			<div class="col">
-				<label for="textSize">Размер текста</label>
+				<label for="textSize">Text size</label>
 				<div class="input-group">
 					<input type="number" class="form-control" id="textSize" value="">
 					<div class="input-group-append">
@@ -32,7 +33,7 @@ editComponents.textProperties =
 				</div>
 			</div>
 			<div class="col">
-				<label for="textColor">Цвет текста</label>
+				<label for="textColor">Text color</label>
 				<input type="color" id="textColor" class="form-control" value="#000000">
 			</div>
 		</div>
@@ -40,35 +41,35 @@ editComponents.textProperties =
 			<div class="col">
 				<div class="custom-control custom-checkbox">
 					<input type="checkbox" class="custom-control-input" id="textCenter" checked>
-					<label class="custom-control-label" for="textCenter">Центрировать текст</label>
+					<label class="custom-control-label" for="textCenter">Centered text</label>
 				</div>
 				<div class="custom-control custom-checkbox">
 					<input type="checkbox" class="custom-control-input" id="textBold" checked>
-					<label class="custom-control-label" for="textBold">Выделить текст</label>
+					<label class="custom-control-label" for="textBold">Bold text</label>
 				</div>
 				<div class="custom-control custom-checkbox">
 					<input type="checkbox" class="custom-control-input" id="textHighlight">	
-					<label class="custom-control-label" for="textHighlight">Выделить блок</label>
+					<label class="custom-control-label" for="textHighlight">Highlighted text</label>
 				</div>
 			</div>
 			<div class="col">
-				<button class="btn btn-danger" type="button" id="buttonRemove" data-toggle="modal" data-target="#modalRemove">Удалить</button>
-				<button class="btn btn-success" type="button" id="buttonComplete">Готово</button>
+				<button class="btn btn-danger" type="button" id="buttonRemove" data-toggle="modal" data-target="#modalRemove">Remove</button>
+				<button class="btn btn-success" type="button" id="buttonComplete">Done</button>
 			</div>
 		</div>
 	</div>`;
 
 
-// Активация формы редактирования элемента
+// Activation of the edit form
 $('#publication').on('click', '.constructed', function(){
-	// Если элемент уже редактируется, ничего делать не надо
+	// No action if the selected component is currenly editing
 	if ( this == editedElement ) return;
-	// Если выбран новый элемент, он становится редактируемым
+	// If a new component is selected, make it editing
 	editedElement = this;
-	// Главный контейнер блока - отличается от editedElement для сборных элементов: как текст с рисунком
+	// Select container of the editing component (actual for composite elements)
 	containerBlock = (this.tagName == 'DIV') ? $(this).parents('.container-fluid')[0] : this;
-	// Добавление элементов редактирования, в зависимости от типа элемента, и выведение текущих параметров в форму
-	// Для текстовых элементов
+	// Add elements of the editing form depending on type of the edited component
+	// For text components
 	if ( $(this).hasClass('textBlock') ) {
 		$(editForm).html(editComponents.textEdit + editComponents.textProperties);
 		$(editForm).find('#textInput')
@@ -78,7 +79,7 @@ $('#publication').on('click', '.constructed', function(){
 				$(editedElement).css('font-size').substr(0, $(editedElement).css('font-size').length - 2) 
 				) 
 			);
-		// $(editForm).find('#textColor') - отложено из-за различия форматов цвета
+		// $(editForm).find('#textColor') - disabled due to the difference in the color schemes, supplementary function is necessary
 		$(editForm).find('#textCenter')[0]
 			.checked = ( $(editedElement).css('text-align') == 'center' ) ? true : false;
 		$(editForm).find('#textBold')[0]
@@ -86,31 +87,31 @@ $('#publication').on('click', '.constructed', function(){
 		$(editForm).find('#textHighlight')[0]
 			.checked = ( $(editedElement).hasClass('bg-highlight') ) ? true : false;
 	} 
-	// По умолчанию, для элементов без функции редактирования
+	// Default edit form for elements where edit is not available
 	else {
 		$(editForm).html(editComponents.default);
 	}
-	// Присоединение формы
+	// Append the edit form
 	$(containerBlock).after(editForm);
   	$(editForm).slideDown();
   	console.log(`Element ${this.tagName} is ready to be edited`);
 });
 
-// События редактирования
+// Edit events
 
-// Редактирование текста
+// Text edit
 $(editForm).on('keyup', '#textInput', function(){
 	$(editedElement).text( $('#textInput').val() );
 });
-// Изменение размера текста
+// Text size changed
 $(editForm).on('change', '#textSize', function(){
 	$(editedElement).css( 'font-size', `${$(this).val()}pt` );
 });
-// Изменение цвета текста
+// Text color changed
 $(editForm).on('change', '#textColor', function(){
 	$(editedElement).css( 'color', $(this).val() );
 });
-// Центрирование текста
+// Text is centered
 $(editForm).on('change', '#textCenter', function(){
 	if ( this.checked ) {
 		$(editedElement).addClass('text-center');
@@ -120,7 +121,7 @@ $(editForm).on('change', '#textCenter', function(){
 		$(editedElement).addClass('text-justify');
 	}	
 });
-// Выделение текста жирным
+// Text is bold
 $(editForm).on('change', '#textBold', function(){
 	if ( this.checked ) {
 		$(editedElement).addClass('font-weight-bold');
@@ -128,7 +129,7 @@ $(editForm).on('change', '#textBold', function(){
 		$(editedElement).removeClass('font-weight-bold');
 	}	
 });
-// Выделение блока цветом
+// Text block is highlighted by preset colors of background and border
 $(editForm).on('change', '#textHighlight', function(){
 	if ( this.checked ) {
 		$(editedElement).addClass('border border-dark-green bg-highlight');
@@ -136,35 +137,35 @@ $(editForm).on('change', '#textHighlight', function(){
 		$(editedElement).removeClass('border border-dark-green bg-highlight');
 	}	
 });
-// Удаление элемента
+// Delete component
 $(editForm).on('click', '#buttonRemove', function(){
 	
 });
-// Подтверждение удаления в модальном окне
+// Confirmation of deletion in a modal
 $('#modalRemove').on('click', '#confirmRemove', function(){
 	$(containerBlock).remove();
 	$('#editForm').slideUp();
 	$('#modalRemove').modal('hide');
 	console.log(`Element ${containerBlock.tagName} removed`);
 });
-// Завершение правок
+// Edit completed
 $(editForm).on('click', '#buttonComplete', function(){
 	$(editedElement).text( $('#textInput').val() );
 	console.log('Text edit completed');
 	$('#editForm').slideUp();
 	editedElement = null;
 });
-// Отмена отправки формы при нажатии Enter
+// Preventing form submit when Enter is pressed
 $(editForm).on('submit', function(){
 	event.preventDefault();
 });
 
-// Выбор на кнопке "Новый элемент"
-$('#paragraph').on('click', (event) => { event.preventDefault(); addText('p', 'абзац') });
-$('#subheader').on('click', (event) => { event.preventDefault(); addText('h2', 'подзаголовок') });
-/* 	Функция добавления блоков рисунков работает но временно отключена
-	Также работает editForm для textBlock в #imageLeft и #imageRight
-	Функция добавления не используются до реализации editForm для imgBlock
+// Select in the "New component" dropdown
+$('#paragraph').on('click', (event) => { event.preventDefault(); addText('p', 'paragraph') });
+$('#subheader').on('click', (event) => { event.preventDefault(); addText('h2', 'subheading') });
+/* 	Functions to add image blocks are working but temporary disabled
+	editForm is working for text content of #imageLeft and #imageRight
+	The functions are not used until editForm for imgBlock is implemented
 $('#image').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'center') });
 $('#imageLeft').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'left') });
 $('#imageRight').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'right') });
@@ -173,20 +174,20 @@ $('#imageRight').on('click', (event) => { event.preventDefault(); addImage('4', 
 }); // $(document).ready
 
 function addText(tag, name) {
-// Добавляет к публикации новый tag с текстом "Новый name"
+// Add new text tag containing `New ${name}`
 	var newElement = document.createElement(tag);
 	$(newElement)
 		.addClass('constructed textBlock')
-		.append(`Новый ${name}`);
+		.append(`New ${name}`);
  	$('#publication').append(newElement);
  	console.log(`New ${newElement.tagName} is created`);
 }
 
 function addImage(size, src, position) {
-// Добавляет к публикации новый блок с img и текстом слева или справа)
-// size - адаптивный размер рисунка от 1 до 12
-// src - расположение файла рисунка
-// position - положение рисунка: center (текста нет), left или right
+// Add new block with img in center or img+text on left/right
+// size - adaptive image size from 1 to 12
+// src - рimage file location
+// position - image position: 'center' (no text), 'left' or 'right'
 	var newElement = document.createElement('div');
 	$(newElement)
 		.addClass('container-fluid')
@@ -197,10 +198,10 @@ function addImage(size, src, position) {
 			`);
 	switch (position) {
 		case 'left': 
-			$(newElement.firstElementChild).append('<div class="col-md constructed textBlock">Новый текст</div>');
+			$(newElement.firstElementChild).append('<div class="col-md constructed textBlock">New text</div>');
 			break;
 		case 'right':
-			$(newElement.firstElementChild).prepend('<div class="col-md constructed textBlock">Новый текст</div>');
+			$(newElement.firstElementChild).prepend('<div class="col-md constructed textBlock">New text</div>');
 			break;
 		default:
 			$(newElement.firstElementChild).append('<div class="col-md"></div>');

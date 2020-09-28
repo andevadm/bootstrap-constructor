@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
   <title>Bootstrap Constructor</title>
@@ -17,8 +17,8 @@
 
 	<div class="alert alert-warning alert-dismissible fade show" role="alert">
 	  <h2>Bootstrap Constructor</h2>
-	  <p>Для <strong>создания</strong> нового элемента - выберите его из списка ниже.</p>
-	  <p>Для <strong>редактирования</strong> элемента - щелкните на нем.</p>
+	  <p>Use a "New component" button <strong>to create</strong>.</p>
+	  <p>Click on an existed component <strong>to edit </strong>.</p>
 	  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	    <span aria-hidden="true">&times;</span>
 	  </button>
@@ -27,7 +27,7 @@
 	<div id="publication">
 
 		<h1 class="constructed textBlock text-center">
-			Основной заголовок
+			New heading
 		</h1>
 
 	</div>
@@ -35,25 +35,23 @@
 	<form class="create-element jumbotron">
 		<span class="dropdown">
 			<button id="newElement" class="btn dropdown-toggle bg-success text-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Новый элемент
+				New component
 			</button>
 			<div class="dropdown-menu" aria-labelledby="newElement">
-				<a class="dropdown-item" id="paragraph" href="#">Абзац</a>
-			    <a class="dropdown-item" id="subheader" href="#">Подзаголовок</a>
-			    <!--Функция добавления блоков рисунков работает но временно отключена:
-					до реализации функции редактирования рисунка
-			    <a class="dropdown-item" id="image" href="#">Рисунок</a>
-			    <a class="dropdown-item" id="imageLeft" href="#">Текст с рисунком слева</a>
-			    <a class="dropdown-item" id="imageRight" href="#">Текст с рисунком справа</a>
+				<a class="dropdown-item" id="paragraph" href="#">Paragraph</a>
+			    <a class="dropdown-item" id="subheader" href="#">Subheading</a>
+			    <!-- The options adding image  are working, but temporary disabled
+			    <a class="dropdown-item" id="image" href="#">Image</a>
+			    <a class="dropdown-item" id="imageLeft" href="#">Paragraph with image on a left</a>
+			    <a class="dropdown-item" id="imageRight" href="#">Paragraph with image on a right</a>
 				-->
 			</div>
 		</span>
 	</form>
 
-<!--Кнопка для просмотра созданной страницы не используется:
-	понадобится при реализации сохранения на сервере
+<!-- The button presenting final view is not used
 	<button id="finalPage" class="btn bg-success text-white" type="button">
-		Просмотр готовой страницы
+		Final view
 	</button>
 -->
 
@@ -61,17 +59,17 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <p class="modal-title">Удаление элемента</p>
+	        <p class="modal-title">Delete the component?</p>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <p>Вы уверены, что хотите удалить элемент?</p>
+	        <p>Please confirm the deletion</p>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-outline-danger" id="confirmRemove">Подтвердить</button>
-	        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Отмена</button>
+	        <button type="button" class="btn btn-outline-danger" id="confirmRemove">Confirm</button>
+	        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
 	      </div>
 	    </div>
 	  </div>
