@@ -58,18 +58,38 @@ editComponents.textProperties =
 			</div>
 		</div>
 	</div>`;
-
+editComponents.imgEdit = 
+	`<div class="form-group col-md-6 imgInput">
+	<label for="imgInput">Please select an image:</label>
+		<div class="custom-file">
+			<label for="imgInput" class="custom-file-label text-left">JPG or PNG file</label>
+			<input type="file" id="imgInput" class="form-control-file" accept=".jpg, .jpeg, .png">
+		</div>
+	</div>`;
+editComponents.imgProperties = 
+	`<div class="form-group col-md-3 imgSize">
+		<label for="imgSize" class="mr-2">Image size (1-10):</label>
+		<input type="number" class="form-control" id="imgSize" title="Not applicable for small screens" min="1" max="10" step="1" value="6">
+	</div>
+	<div class="form-group col-md-3 imgButtons">
+			<button class="btn btn-danger" type="button" id="buttonRemove" data-toggle="modal" data-target="#modalRemove">Remove</button>
+			<button class="btn btn-success" type="button" id="buttonComplete">Done</button>
+	</div>`;
 
 // Activation of the edit form
 $('#publication').on('click', '.constructed', function(){
+
 	// No action if the selected component is currenly editing
 	if ( this == editedElement ) return;
 	// If a new component is selected, make it editing
 	editedElement = this;
 	// Select container of the editing component (actual for composite elements)
 	containerBlock = (this.tagName == 'DIV') ? $(this).parents('.container-fluid')[0] : this;
+
 	// Add elements of the editing form depending on type of the edited component
-	// For text components
+
+	// For text 
+	// Works for paragraph, heading, subheading, as well as for text content of #imageLeft and #imageRight
 	if ( $(this).hasClass('textBlock') ) {
 		$(editForm).html(editComponents.textEdit + editComponents.textProperties);
 		$(editForm).find('#textInput')
@@ -87,10 +107,24 @@ $('#publication').on('click', '.constructed', function(){
 		$(editForm).find('#textHighlight')[0]
 			.checked = ( $(editedElement).hasClass('bg-highlight') ) ? true : false;
 	} 
+
+	// For images
+	else if ( $(this).hasClass('imgBlock') ) {
+		$(editForm).html(editComponents.imgEdit + editComponents.imgProperties);
+		var currentImgSize = 
+			editedElement.className
+			.match(/col-\w\w-\d/)[0]
+			.slice(-1);
+		$(editForm).find('#imgSize')
+			.val(currentImgSize);
+		// checkImageResize(); 
+	}
+
 	// Default edit form for elements where edit is not available
 	else {
 		$(editForm).html(editComponents.default);
 	}
+
 	// Append the edit form
 	$(containerBlock).after(editForm);
   	$(editForm).slideDown();
@@ -137,9 +171,22 @@ $(editForm).on('change', '#textHighlight', function(){
 		$(editedElement).removeClass('border border-dark-green bg-highlight');
 	}	
 });
+// Image file added
+$(editForm).on('change', '#imgInput', function(){
+	var imgFile = this.files[0];
+	$(editedElement).find('img').attr('src', URL.createObjectURL(imgFile));
+});
+// Image size changed
+$(editForm).on('change', '#imgSize', function(){
+	var imgSize = this.value;
+	$(editedElement).removeClass(function (index, className) {
+    return (className.match (/(^|\s)col-sm-\S+/g) || []).join(' ');
+	});
+	$(editedElement).addClass(`col-sm-${imgSize}`);
+});
 // Delete component
-$(editForm).on('click', '#buttonRemove', function(){
-	
+$(editForm).on('click', '#buttonRemove', function(event){
+	event.preventDefault();
 });
 // Confirmation of deletion in a modal
 $('#modalRemove').on('click', '#confirmRemove', function(){
@@ -156,20 +203,28 @@ $(editForm).on('click', '#buttonComplete', function(){
 	editedElement = null;
 });
 // Preventing form submit when Enter is pressed
-$(editForm).on('submit', function(){
+$(editForm).on('submit', function(event){
 	event.preventDefault();
 });
+/* Check to disable image resize input for small screens
+	 Not used while display:none in @media(sm) is applied
+checkImageResize();
+$(window).on('resize', checkImageResize);
+function checkImageResize() {
+	if ( window.innerWidth < 576 ) {
+		$('#imgSize').attr('disabled', true);
+	} else {
+		$('#imgSize').attr('disabled', false);
+	};
+}
+*/
 
 // Select in the "New component" dropdown
 $('#paragraph').on('click', (event) => { event.preventDefault(); addText('p', 'paragraph') });
 $('#subheader').on('click', (event) => { event.preventDefault(); addText('h2', 'subheading') });
-/* 	Functions to add image blocks are working but temporary disabled
-	editForm is working for text content of #imageLeft and #imageRight
-	The functions are not used until editForm for imgBlock is implemented
-$('#image').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'center') });
-$('#imageLeft').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'left') });
-$('#imageRight').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.png', 'right') });
-*/
+$('#image').on('click', (event) => { event.preventDefault(); addImage('6', 'img/new_image.svg', 'center') });
+$('#imageLeft').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.svg', 'left') });
+$('#imageRight').on('click', (event) => { event.preventDefault(); addImage('4', 'img/new_image.svg', 'right') });
 
 }); // $(document).ready
 
@@ -193,19 +248,19 @@ function addImage(size, src, position) {
 		.addClass('container-fluid')
 		.append(`
 			<div class="row">
-				<div class="col-md-${size} constructed imgBlock"><img src="${src}" width="100%"></div>
+				<div class="col-sm-${size} constructed imgBlock"><img src="${src}" width="100%"></div>
 			</div>
 			`);
 	switch (position) {
 		case 'left': 
-			$(newElement.firstElementChild).append('<div class="col-md constructed textBlock">New text</div>');
+			$(newElement.firstElementChild).append('<div class="col-sm constructed textBlock">New text</div>');
 			break;
 		case 'right':
-			$(newElement.firstElementChild).prepend('<div class="col-md constructed textBlock">New text</div>');
+			$(newElement.firstElementChild).prepend('<div class="col-sm constructed textBlock">New text</div>');
 			break;
 		default:
-			$(newElement.firstElementChild).append('<div class="col-md"></div>');
-			$(newElement.firstElementChild).prepend('<div class="col-md"></div>');
+			$(newElement.firstElementChild).append('<div class="col-sm"></div>');
+			$(newElement.firstElementChild).prepend('<div class="col-sm"></div>');
 	}
 	$('#publication').append(newElement);
  	console.log(`New image block is created`);

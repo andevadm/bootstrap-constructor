@@ -47,6 +47,10 @@ p {
 	}
 }
 
+.constructed.imgBlock:hover {
+	cursor: pointer;
+}
+
 h1.constructed {
 	@extend .mb-5;
 }
@@ -75,6 +79,19 @@ p.constructed {
 	& .btn {
 		@extend .mt-3, .px-4;
 	}
+	// Image edit properties
+	.custom-file label {
+		color: #aaa ;
+	}
+	#imgSize {
+		max-width: 200px;
+		min-width: 100px;
+		margin-right: 0;
+		margin-left: auto;
+	}
+	.imgButtons {
+		@extend .pt-3;
+	}
 }
 
 // Form containing button to create a new element
@@ -91,7 +108,6 @@ p.constructed {
 	}
 }
 
-
 // Button to view the result, now inactive
 #finalPage {
 	@extend .container-fluid, .p-3, .my-3; 
@@ -102,4 +118,10 @@ p.constructed {
 #modalRemove .modal-header {
 	@extend .bg-danger, .text-white, .text-center;
 	font-size: 1.6rem;
+}
+
+@include media-breakpoint-down(xs) {
+	.imgSize {
+		display: none;
+	}
 }
